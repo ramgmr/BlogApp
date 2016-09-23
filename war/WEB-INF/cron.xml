@@ -3,6 +3,6 @@
 	<cron>
 		<url>/mycronjob</url>
 		<description>Email Blog Updates</description>
-		<schedule>every 2 minutes</schedule>
+		<schedule>every 24 hours</schedule>
 	</cron>
 </cronentries>
