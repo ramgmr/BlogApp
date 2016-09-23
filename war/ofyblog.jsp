@@ -117,13 +117,15 @@
 	    	int i = 0;
 			for (BlogPost g : Posts) 
 	       	{
+				pageContext.setAttribute("post_title", g.Title);
 				pageContext.setAttribute("post_content", g.Content);
 				pageContext.setAttribute("post_user", g.user);
 				pageContext.setAttribute("post_date", g.DatePosted);
 				%>
 				<blockquote>
-				  <p>${fn:escapeXml(post_content)}</p>
-				  <small><cite title="Source Title">${fn:escapeXml(post_user.nickname)}</cite>  ${fn:escapeXml(post_date)}</small>
+				  <h2>${fn:escapeXml(post_title)}</h2>				  
+				  <p><cite title="Source Title"> ${fn:escapeXml(post_content)}</cite></p>
+				  <small><cite title="Source Title">by ${fn:escapeXml(post_user.nickname)} ${fn:escapeXml(post_date)}</cite></small>
 				</blockquote>
 				<%
 	        }
@@ -151,8 +153,19 @@
 	    </div>
 	    <form action="/ofynewpost" method="post">
 	    <div class="modal-body">
-	      <div>
-      		<textarea name="content" rows="5" cols="60"></textarea>
+	      <div class="form-horizontal">
+	      	<div class="form-group">
+	      	  <label class="control-label col-md-2">Title</label>
+	      	  <div class="col-md-10">
+	      	    <input type="text" name="title"></input>
+	      	  </div>
+	      	</div>
+	      	<div class="form-group">
+	      	  <label class="control-label col-md-2">Content</label>
+	      	  <div class="col-md-10">
+	      	    <textarea name="content" rows="5" cols="60"></textarea>
+	      	  </div>
+	      	</div>	
           </div>
       	  <input type="hidden" name="blogname" value="${fn:escapeXml(BlogName)}"/>
           

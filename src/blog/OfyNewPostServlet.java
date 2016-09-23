@@ -31,8 +31,13 @@ public class OfyNewPostServlet extends HttpServlet
         // This lets us run a transactional ancestor query to retrieve all
         // Greetings for a given Guestbook.  However, the write rate to each
         // Guestbook should be limited to ~1/second.
+        String title = req.getParameter("title");
         String content = req.getParameter("content");
-        BlogPost post = new BlogPost(user, content);
+        if(title == null || title.length() == 0 || content == null || content.length() == 0)
+        {
+        	resp.sendRedirect("/ofyblog.jsp");
+        }
+        BlogPost post = new BlogPost(user, title, content);
         ofy().save().entities(post).now();
         resp.sendRedirect("/ofyblog.jsp");
 	}

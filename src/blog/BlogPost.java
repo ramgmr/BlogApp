@@ -11,6 +11,7 @@ public class BlogPost implements Comparable<BlogPost>
 {
 	@Id Long id;
 	public User user;
+	public String Title;
 	public String Content;
 	public Date DatePosted;
 	
@@ -20,9 +21,10 @@ public class BlogPost implements Comparable<BlogPost>
 		DatePosted = new Date();
 	}
 	
-	public BlogPost(User user, String content)
+	public BlogPost(User user, String title, String content)
 	{
 		this.user = user;
+		this.Title = title;
 		this.Content = content;
 		DatePosted = new Date();
 	}
