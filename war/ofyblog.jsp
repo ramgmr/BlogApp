@@ -10,7 +10,9 @@
 <%@ page import="java.util.Collections" %>
 <%@ page import="blog.Blog" %>
 <%@ page import="blog.BlogPost" %>
+<%@ page import="blog.People" %>
 <%@ page import="com.googlecode.objectify.Key" %>
+<%@ page import="com.googlecode.objectify.Ref" %>
 <%@ page import="com.googlecode.objectify.ObjectifyService" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%-- //[End Imports] --%>
@@ -22,6 +24,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>SAB</title>
 	<link type="text/css" rel="stylesheet" href="/style/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="/style/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
@@ -35,9 +38,27 @@
         BlogName = "default";
     }
     pageContext.setAttribute("BlogName", BlogName);
+    UserService userService = UserServiceFactory.getUserService();
+	User user = userService.getCurrentUser();
+	pageContext.setAttribute("user", user);
+	People person = null;
+	List<People> people = null;
+	if(user != null)
+	{
+		ObjectifyService.register(People.class);		
+		people = ObjectifyService.ofy().load().type(People.class).list();
+		for(People p : people)
+		{
+			if(p.email.compareTo(user.getEmail()) == 0)
+			{
+				person = p;
+				break;
+			}
+		}
+	}
 %>
 <!--  [START Navbar] -->
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -53,13 +74,37 @@
       <ul class="nav navbar-nav navbar-left">
 	    <li class="active"><a href="#">Home <span class="badge">42</span></a></li>
 	    <li><a href="#">Profile <span class="badge"></span></a></li>
-	    <li><a href="#">Messages <span class="badge">3</span></a></li>
+	    <%
+			if(user != null)
+			{
+				%>
+				<li>
+					<a id="btnnewpost">New Post</a>
+				</li>
+				<li>
+	        	<%
+				    if (person == null || !person.Subscribed)
+				    {
+				      	%>
+						<a style="color:green;" href="/email">Subscribe!</a>
+						<%
+				    }
+				    else 
+				    {
+						%>
+						<a style="color:red;" href="/email">Unsubscribe!</a>
+						<%
+					}
+				%>			    
+				</li>
+				<%
+			}
+		%>
+		
 	  </ul>
       <ul class="nav navbar-nav navbar-right">
       		<li>
         	<%
-        		UserService userService = UserServiceFactory.getUserService();
-            	User user = userService.getCurrentUser();
 			    if (user != null) 
 			    {
 			      	pageContext.setAttribute("user", user);
@@ -83,17 +128,7 @@
 
 
 
-<div class="container">
-	<%
-		if(user != null)
-		{
-			%>
-			<div>
-				<a id="btnnewpost" class="btn btn-default btn-lg btn-block">New Post</a>
-			</div>
-			<%
-		}
-	%>	
+<div class="container">	
 	<!-- [START Printing Post] -->
 	<div class="jumbotron">
 	  <div class="">
