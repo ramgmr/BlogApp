@@ -30,12 +30,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/email</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>Cron</servlet-name>
-		<servlet-class>blog.CronServlet</servlet-class>
+		<servlet-name>CronJob</servlet-name>
+		<servlet-class>blog.CronJobServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Cron</servlet-name>
-		<url-pattern>/crontask</url-pattern>
+		<servlet-name>CronJob</servlet-name>
+		<url-pattern>/mycronjob</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>ofyblog.jsp</welcome-file>
