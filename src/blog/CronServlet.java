@@ -30,5 +30,34 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 @SuppressWarnings("serial")
 public class CronServlet extends HttpServlet
 {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException 
+	{
+		Properties props = new Properties();
+	    Session session = Session.getDefaultInstance(props, null);
+	    try
+	    {
+	    	Message msg = new MimeMessage(session);
+	    	msg.setFrom(new InternetAddress("ryan.maphet@utexas.edu", "Super Awesome Blog"));
+	    	msg.setRecipient(Message.RecipientType.TO, new InternetAddress("ramgmr@gmail.com", "Ryan Maphet"));
+	    	msg.setSubject("Daily update");
+	    	msg.setText("Test cron email");
+	    	Transport.send(msg);
+	    }
+	    catch (AddressException e)
+	    {
+	        // ...
+	    } 
+	    catch (MessagingException e) 
+	    {
+	        // ...
+	    } 
+	    catch (UnsupportedEncodingException e) 
+	    {
+	        // ...
+	    }
+	    
+	}
+	
 	
 }
+

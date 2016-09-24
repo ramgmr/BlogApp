@@ -4,6 +4,6 @@
     <url>/crontask</url>
     <target>beta</target>
     <description>email blog updates</description>
-    <schedule>every day 17:00</schedule>
+    <schedule>every 2 minutes</schedule>
   </cron>
 </cronentries>
