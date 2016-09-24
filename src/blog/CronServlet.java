@@ -37,7 +37,7 @@ public class CronServlet extends HttpServlet
 	    try
 	    {
 	    	Message msg = new MimeMessage(session);
-	    	msg.setFrom(new InternetAddress("ryan.maphet@utexas.edu", "Super Awesome Blog"));
+	    	msg.setFrom(new InternetAddress("noreply@blogapp-144400.appspot.com", "Harrison Ford"));
 	    	msg.setRecipient(Message.RecipientType.TO, new InternetAddress("ramgmr@gmail.com", "Ryan Maphet"));
 	    	msg.setSubject("Daily update");
 	    	msg.setText("Test cron email");
